@@ -790,4 +790,46 @@ myList.print(); // Should print nothing since we removed all elements
 
 
   
-  
+  class Node{
+    constructor(data){
+        this.value= value;
+        this.left=null;
+        this.right=null;
+    }
+  }
+  class binarySearchTree{
+    constructor(){
+        this.root=null;
+
+    }
+    isEmpty(){
+        if(this.root===null){
+            return true;
+        }
+    insert()
+     {
+        let newNode= new Node();
+        if(this.isEmpty){
+            this.root=newNode;
+        }else{
+          this.insertNode(this.root, newNode)
+        }
+    }
+    insertNode(root, newNode){
+      if (newNode.value < root.value){
+        if(root.left === null){
+             root.left = newNode;
+         } else{
+          this.insertNode(root.left , newNode);
+         }
+       } else if(newNode > root.value){
+        if(root.right == null){
+               root.right = newNode;
+           } else{
+            this.insertNode(root.right , newNode);
+           }
+       }
+    }
+    }
+
+  }

@@ -86,7 +86,7 @@ const fibonacci = (n) => {
   if (n < 2) {
     return n;
   }
-  return fibonacci(n - 1) + fibonacci(n - 2);
+  return fibonacci(n - 1) + fibonacci(n - 2); 
 };
 console.log("fibonacci in recursion:-", fibonacci(6));
 
@@ -140,6 +140,7 @@ const binarySearch = (arr, target) => {
   return -1;
 };
 console.log("binarySearch:-", binarySearch([1, 2, 3, 4, 5, 6], 3));
+
 // Recursive Binary Search
 const recursiveBinarySearch = (arr, target) => {
   return search(arr, target, 0, arr.length - 1);
@@ -168,7 +169,9 @@ console.log("binarySearch:-", recursiveBinarySearch([1, 2, 3, 4, 5, 6], 6));
 console.log("binarySearch:-", recursiveBinarySearch([1, 2, 3, 4, 5, 6], 2));
 //SHORT
 
-//Bubble short
+//Bubble short:-
+// Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements,
+// and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted
 const bubbleShort = (arr) => {
   let swapped;
   do {
@@ -184,6 +187,7 @@ const bubbleShort = (arr) => {
   } while (swapped);
   return arr;
 };
+
 console.log("bubbleShort:-", bubbleShort([1, 3, 4, 2, 5, 6]));
 console.log("bubbleShort:-", bubbleShort([-1, -2, -4, -3, 5, 6]));
 console.log("bubbleShort:-", bubbleShort([1, 2, 3, 4, 5, 6]));
@@ -208,7 +212,10 @@ function bubbleShortReverse(arr) {
 
 const arr2 = [5, 2, 10, 20, 50];
 console.log(bubbleShortReverse(arr2));
-
+//Insertion sort :-
+//Insertion sort is another simple sorting algorithm that builds the final sorted array one item at a time.
+// It is much less efficient on large lists than more advanced algorithms such as quicksort, 
+//heapsort, or merge sort, but it performs well for small lists or lists that are already partially sorted.
 const insertionSport = (array) => {
   for (let index = 1; index < array.length; index++) {
     let numberToInsert = array[index];
@@ -221,9 +228,14 @@ const insertionSport = (array) => {
   }
 };
 const array = [8, 20, -2, 4, -6];
+
 insertionSport(array);
 console.log(array);
-
+// Quick Sort :-
+//is a divide-and-conquer algorithm that works by selecting a 'pivot' element from the array
+// and partitioning the other elements into two sub-arrays according to whether 
+//they are less than or greater than the pivot.
+// The sub-arrays are then sorted recursively.
 const quickSort = (arr) => {
   if (arr.length < 2) {
     return arr;
@@ -243,7 +255,11 @@ const quickSort = (arr) => {
 const x = [8, 20, -2, 4, -6];
 console.log(quickSort(x));
 
-//mergeSort
+//mergeSort:-
+// Merge Sort is another divide-and-conquer algorithm 
+//that works by dividing the unsorted array into n sub-arrays,
+// each containing one element, and then repeatedly merging sub-arrays to produce new sorted sub-arrays
+// until there is only one sub-array remaining.
 const mergeSort = (arr) => {
   if (arr.length < 2) {
     return arr;
@@ -281,7 +297,10 @@ const cartesianProduct = () => {
 };
 console.log(cartesianProduct());
 
-//climbingStaircase prob
+//climbingStaircase prob:-
+//The problem is commonly known as the "Climbing Stairs" problem.
+// The goal is to find the number of distinct ways to climb a staircase with n steps.
+// You can climb the staircase either 1 step or 2 steps at a time.
 
 const climbingStaircase = (n) => {
   let steps = [1, 2];
@@ -292,7 +311,14 @@ const climbingStaircase = (n) => {
   return steps[n - 1];
 };
 console.log(climbingStaircase(5));
+//Tower Of Hanoi:-
+//The puzzle starts with the disks in a neat stack in ascending order of size on one rod, 
+//the smallest at the top. The objective of the puzzle is to move the entire stack to another rod,
+// obeying the following simple rules:
 
+//1.Only one disk can be moved at a time.
+//2. Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack or on an empty rod.
+//3.No disk may be placed on top of a smaller disk.
 function towerOfHanoi(n, fromRod, toRod, usingRod) {
   if (n === 1) {
     console.log(`Move disk 1 from ${fromRod} to ${toRod}`);
@@ -317,14 +343,67 @@ arrayEx.shift();
 for (const item of arrayEx) {
   console.log(item);
 }
+
+//EX1-find Duplicates elem in Array
+function findDuplicates(array) {
+  const duplicates = [];
+
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[i] === array[j]) {
+        duplicates.push(array[i]);
+      }
+    }
+  }
+
+  return duplicates;
+}
+
+console.log(findDuplicates([1, 2, 4, 5, 2,4,5]));
+
+//EX2-Remove Duplicates elem in Array
+
+function removeDuplicates(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[i] === array[j]) {
+        array.splice(j, 1);
+        j--;
+      }
+    }
+  }
+}
+const originalArray = [1, 2, 4, 5, 2,5,6,3,2,1];
+removeDuplicates(originalArray);
+console.log(originalArray); 
+
 //map, filter ,reduce,concat,slice?
 // Declare the arrays
 let array1 = [1, 2, 3, 4, 5];
 let array2 = [6, 7, 8, 9, 10];
 
 // map function
+//EX1:-Squaring Each Element in an Array
 let mapArray = array1.map((num) => num * 2);
 console.log("Map:", mapArray); // [2, 4, 6, 8, 10]
+// EX2:- Converting Celsius to Fahrenheit
+let tempConverter=(array)=>{
+  let celsius=array.map((celsius)=> ((celsius*9/5)+32))
+  return celsius;
+}
+console.log('tempConverter',tempConverter([0,102,3,31]))
+
+//EX3:-Extracting Names from an Array of Objects
+const people = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 },
+  { name: 'Charlie', age: 22 },
+];
+
+const names = people.map((person) => person.name);
+
+console.log(names); 
+
 
 // filter function
 let filterArray = array1.filter((num) => num % 2 === 0);
@@ -333,6 +412,28 @@ console.log("Filter:", filterArray); // [2, 4]
 // reduce function
 let reduceSum = array1.reduce((sum, num) => sum + num, 0);
 console.log("Reduce Sum:", reduceSum); // 15
+
+//Ex3:-calculate The Product of an Array
+let calculateTheProduct =(array)=>{
+  let product = array.reduce((x,y)=>x*y)
+  return product;
+}
+console.log("Calculate Product: ",calculateTheProduct([2,3,4,5,6]))
+
+//EX4:-Flattening an Array of Arrays
+let flattenedArray=(array)=>{
+let flatArray= array.reduce((x,y)=>
+  x.concat(y))
+  return flatArray;
+}
+console.log("flattenedArray: ",flattenedArray([[1,2],[2,3],[4,5],[9,8]]))
+//EX4:- Finding the Maximum Value in an Array
+let findMaxValue = (arr) =>{
+  let maxVal= arr.reduce((x,y)=>x>y?x:y)
+  return maxVal;
+}
+console.log("Find Max Value: ",findMaxValue([1,2,3,4,5]))
+
 
 // reduce function to find maximum value
 let reduceMax = array1.reduce((max, num) => (max > num ? max : num), array1[0]);
@@ -789,47 +890,202 @@ myList.print(); // Should print nothing since we removed all elements
 
 
 
-  
-  class Node{
-    constructor(data){
-        this.value= value;
-        this.left=null;
-        this.right=null;
+class Node {
+  constructor(data) {
+    this.value = data;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class binarySearchTree {
+  constructor() {
+    this.root = null;
+  }
+
+  isEmpty() {
+    return this.root === null;
+  }
+
+  insert(data) {
+    let newNode = new Node(data);
+    if (this.isEmpty()) {
+      this.root = newNode;
+    } else {
+      this.insertNode(this.root, newNode);
     }
   }
-  class binarySearchTree{
-    constructor(){
-        this.root=null;
 
+  insertNode(root, newNode) {
+    if (newNode.value < root.value) {
+      if (root.left === null) {
+        root.left = newNode;
+      } else {
+        this.insertNode(root.left, newNode);
+      }
+    } else if (newNode.value > root.value) {
+      if (root.right === null) {
+        root.right = newNode;
+      } else {
+        this.insertNode(root.right, newNode);
+      }
     }
-    isEmpty(){
-        if(this.root===null){
-            return true;
-        }
-    insert()
-     {
-        let newNode= new Node();
-        if(this.isEmpty){
-            this.root=newNode;
-        }else{
-          this.insertNode(this.root, newNode)
-        }
-    }
-    insertNode(root, newNode){
-      if (newNode.value < root.value){
-        if(root.left === null){
-             root.left = newNode;
-         } else{
-          this.insertNode(root.left , newNode);
-         }
-       } else if(newNode > root.value){
-        if(root.right == null){
-               root.right = newNode;
-           } else{
-            this.insertNode(root.right , newNode);
-           }
-       }
-    }
-    }
+  }
+  search(root, value)
+  {
+if(!root){
+return false;
+} else {
+if(root.value==value){
+   return true;
+ } else if(value<root.value){
+  return this.search(root.left, value);
+ } else {
+  return this.search(root.right, value);
+ }
+}
 
   }
+  preOrder(root)
+  {
+    if(root){
+      console.log(root.value);
+      this.preOrder(root.left);
+      this.preOrder(root.right);
+    }
+  }
+  inOrder(root)
+  {
+    if(root){
+      this.inOrder(root.left);
+      console.log(root.value);
+      this.inOrder(root.right);
+    }
+  }
+  postOrder(root)
+  {
+    if(root){
+      this.postOrder(root.left);
+      this.postOrder(root.right);
+      console.log(root.value);
+    }
+  }
+
+  leveLOrder()
+  {
+    let queue=[];
+    let current=this.root;
+    queue.push(current);
+    while (queue.length>0)
+    {
+      current = queue.shift();
+      console.log(current.value);
+      if(current.left!=null)
+        queue.push(current.left);
+      if(current.right!=null)
+        queue.push(current.right);
+    }
+  }  
+  delete(value) {
+    this.root = this.deleteNode(this.root, value);
+  }
+
+  deleteNode(root, value) {
+    if (root === null) {
+      return root;
+    }
+
+    if (value < root.value) {
+      root.left = this.deleteNode(root.left, value);
+    } else if (value > root.value) {
+      root.right = this.deleteNode(root.right, value);
+    } else {
+      // Handle case where node with only one child or no child
+      if (root.left === null) {
+        return root.right;
+      } else if (root.right === null) {
+        return root.left;
+      }
+
+      // Handle case where node has two children
+      root.value = this.findMinValue(root.right);
+      root.right = this.deleteNode(root.right, root.value);
+    }
+
+    return root;
+  }
+
+  findMinValue(node) {
+    let minValue = node.value;
+    while (node.left !== null) {
+      minValue = node.left.value;
+      node = node.left;
+    }
+    return minValue;
+  }
+
+}
+
+
+//ASYNC - AWAIT Interview Questine
+// Write a simple async function that returns a resolved promise after a delay of 2000 milliseconds.
+async function delayedPromise(){
+  return new Promise(resolve=>{
+setTimeout(()=>{
+  resolve("promise resolved after 2000 millisecond")
+},2000)
+  });
+}
+// Use async await to handle a fetch call to an API endpoint and log the JSON response to the console.
+async function fetchData(){
+  const data= await fetch('https://api.example.com/data');
+  dataModified =await data.json();
+  console.log(dataModified);
+}
+
+//Perform Error Handling on it
+async function fetchData(){
+  try{
+  const data= await fetch('https://api.example.com/data');
+  dataModified =await data.json();
+  console.log(dataModified);
+  } catch (error){
+    console.error('Error fetching Data',error)
+
+  }
+}
+// Implement error handling in an async function that fetches data from an API. Handle both successful and failed responses.
+
+async function fetchDataFromApi(){
+  try{
+    const response = await fetch('https://api.example.com');
+    if(!response.ok){
+      throw new Error(`HTTP ERROR`)
+    }
+    const data =await response.json()
+  }
+  catch(error){
+    console.log('ERROR WHILE FETching data')
+  }
+}
+//Write an async function that performs multiple asynchronous operations sequentially, ensuring each one completes before the next begins.
+
+
+
+async function AsycronusOperation(){
+  const val1= task1();
+  console.log(val1)
+  const val2= task2();
+  console.log(val2)
+  const val3= task3();
+  console.log(val3)
+}
+async function task1(){
+  return "TASK 1"
+}
+async function task2(){
+  return "TASK 2"
+}
+async function task3(){
+  return "TASK 3"
+}

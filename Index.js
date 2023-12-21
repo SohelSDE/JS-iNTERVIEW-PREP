@@ -1,7 +1,13 @@
 //MATH ALGORITHMS
 
-//fibonacci series
-const fibNo = (n) => {
+// fibonacci series:-
+//The Fibonacci series can be represented as:
+//0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144,
+//The Fibonacci series is an infinite series of numbers that begins with 0 and 1.
+// Each number in the series is the sum of the two numbers that come before it. For example,
+// 2 is found by adding the two numbers before it (1 + 1),
+ //and 3 is found by adding the two numbers before it (1 + 2).
+const fibNo = (n) => { 
   const fib = [0, 1];
   for (var i = 2; i < n; i++) {
     fib[i] = fib[i - 1] + fib[i - 2];
@@ -11,7 +17,10 @@ const fibNo = (n) => {
 console.log("Fib seq is:-", fibNo(5));
 console.log("Fib seq is:-", fibNo(7));
 
-//factorial
+//factorial:-
+//Factorial of a positive integer (number) is the sum of multiplication of all the integers 
+//smaller than that positive integer. 
+//For example, factorial of 5 is 5 * 4 * 3 * 2 * 1 which equals to 120.
 const factorial = (n) => {
   let element = 1;
   for (let i = 2; i <= n; i++) {
@@ -20,7 +29,9 @@ const factorial = (n) => {
   return element;
 };
 console.log("factorial is:-", factorial(5));
-//prime OR not?
+//prime OR not
+//In math, a prime number is a natural number greater than 1 that is not a product of two smaller natural numbers. 
+//A number must be a "natural number" for it to be prime and infinity is not a natural number.
 const prime = (n) => {
   if (n < 2) {
     return false;
@@ -52,7 +63,10 @@ const primeOptimal = (n) => {
 console.log("is Prime?:-", primeOptimal(5));
 console.log("is Prime?:-", primeOptimal(4));
 console.log("is Prime?:-", primeOptimal(3));
-
+//isPowerOfTwo:-
+//Keep dividing the number by two, i.e, do n = n/2 iteratively. In any iteration,
+// if n%2 becomes non-zero and n is not 1 then n is not a power of 2.
+// If n becomes 1 then it is a power of 2. 
 const isPowerOfTwo = (n) => {
   if (n < 1) {
     return false;
@@ -100,7 +114,9 @@ console.log("recursiveFactorial:-", recursiveFactorial(5));
 
 //SEARCH
 
-//Linear Search
+//Linear Search:-Linear Search is defined as a sequential search algorithm that 
+//starts at one end and goes through each element of a list until the desired element is found,
+// otherwise the search continues till the end of the data set
 const linearSearch = (n) => {
   let Array1 = [1, 2, 6, 4, 3, 8];
   for (let i = 0; i < Array1.length; i++) {
@@ -122,7 +138,9 @@ const linearSearch2 = (arr, target) => {
 };
 console.log("linearSearch:-", linearSearch2([3, 1, 2, 5, 6, 4], 3));
 
-//binarySearch
+//binarySearch:-Binary Search is defined as a searching algorithm used in a sorted array by repeatedly 
+//dividing the search interval in half. The idea 
+//of binary search is to use the information that the array is sorted and reduce the time complexity to O(log N). 
 const binarySearch = (arr, target) => {
   let startPosition = 0;
   let endPosition = arr.length - 1;
@@ -311,7 +329,32 @@ const climbingStaircase = (n) => {
   return steps[n - 1];
 };
 console.log(climbingStaircase(5));
-//Tower Of Hanoi:-
+
+// ### Problem 5: Unique Substrings
+// Write a function `uniqueSubstrings` that takes a string as input and returns an array containing all unique substrings of the input string.
+// For example:
+// console.log(uniqueSubstrings('abc'));
+// // Output: ['a', 'ab', 'abc', 'b', 'bc', 'c']
+// **Constraints:**
+// - The order of substrings in the output array doesn't matter.
+// - The input string will have a length between 1 and 10.
+function uniqueSubstrings(str) {
+  let substrings = [];
+
+  for (let i = 0; i < str.length; i++) {
+    for (let j = i + 1; j <= str.length; j++) {
+      substrings.push(str.slice(i, j));
+    }
+  }
+
+  return substrings;
+}
+
+console.log(uniqueSubstrings("abc"));
+
+
+
+// //Tower Of Hanoi:-
 //The puzzle starts with the disks in a neat stack in ascending order of size on one rod, 
 //the smallest at the top. The objective of the puzzle is to move the entire stack to another rod,
 // obeying the following simple rules:
@@ -402,7 +445,7 @@ const people = [
 
 const names = people.map((person) => person.name);
 
-console.log(names); 
+console.log(names); // Output: ['Alice', 'Bob', 'Charlie']
 
 
 // filter function
@@ -475,6 +518,105 @@ console.log(values); // ['John', 30, 'New York']
 let entries = Object.entries(person);
 console.log(entries); // [['name', 'John'], ['age', 30], ['city', 'New York']]
 
+//EX1:-Question 1:
+// Problem:
+// Given an object person:
+
+
+let obj = {
+  name: 'John',
+  age: 30,
+  address: {
+    city: 'New York',
+    country: 'USA'
+  }
+}
+// Write a function cloneObject that takes an object as input and returns a deep copy of the object.
+ function cloneObjectMaker (person){
+  let clone = {
+... person
+  }
+return clone
+  
+ }
+ console.log(cloneObjectMaker(obj))
+//ex2-Create a class Book with the following properties: title, author, and price.
+// Implement a method getBookInfo that returns a string with the book's information. 
+let book={
+  title:"The Alchemist",
+  author:"Paulo Coelho",
+  price:59.90,
+  getBookInfo:()=>{
+    console.log(`title is ${book.title} auther is ${book.author} price is ${book.price}`)
+  }
+
+}
+book.getBookInfo();
+//Write a function filterByGrade that takes an array of students and a grade as input,
+// and returns an array of students
+// who have the specified grade.
+const students = [
+  { name: 'Alice', age: 25, grade: 'A' },
+  { name: 'Bob', age: 22, grade: 'B' },
+  { name: 'Charlie', age: 28, grade: 'A' }
+];
+function filterByGrade(students,grade) {
+  return students.filter((student)=> student.grade===grade )
+}
+console.log(filterByGrade(students,'A'))
+
+
+// Problem:
+// Consider the following object:
+const car = {
+  brand: 'Toyota',
+  model: 'Camry',
+  year: 2022
+};
+// Write a function updateCar that takes three parameters (brand, model, year) 
+//and updates the corresponding properties of the car object.
+function updateCar(car, brand,model,year){
+  car.brand=brand;
+  car.model=model;
+  car.year=year;
+  return car;
+}
+console.log(updateCar(car,'Honda','ion',2019))
+//Question 5:
+//Write a function flattenObject that takes an object with nested properties and returns a flat object. For example:
+const nestedObject = {
+  a: 1,
+  b: {
+    c: 2,
+    d: {
+      e: 3
+    }
+  }
+};
+
+function flattenObject(nestedObject) {
+  let flatObject = {};
+
+  function recurse(obj, prefix) {
+    for (let prop in obj) {
+      let newProp = prefix ? `${prefix}.${prop}` : prop;
+
+      if (typeof obj[prop] === "object") {
+        recurse(obj[prop], newProp);
+      } else {
+        flatObject[newProp] = obj[prop];
+      }
+    }
+  }
+  recurse(nestedObject, '');
+  return flatObject;
+}
+
+const flatObject = flattenObject(nestedObject);
+console.log(flatObject);
+
+
+
 //SET
 const set = new Set([1, 2, 3]);
 set.add(4);
@@ -486,6 +628,100 @@ for (const item of set) {
 set.delete(3);
 
 set.clear();
+
+//EX1:-Write a function union that takes two sets as parameters and returns 
+//a new set containing the union of the input sets (all unique elements from both sets).
+
+function unionX(setA, setB) {
+  let unionSet = new Set();
+  for (let element of setA) {
+    unionSet.add(element);
+  }
+  for (let element of setB) {
+    unionSet.add(element);
+  }
+
+  return unionSet;
+}
+function optimisedUnionX(setA, setB) {
+  return new Set([...setA, ...setB]);
+}
+
+var setA = new Set([1, 2, 3, 4, 5, 6]);
+var setB = new Set([4, 5, 6, 7, 8, 9]);
+console.log('union',unionX(setA, setB));
+
+//EX2:-Create a function isSubset that takes two sets as parameters and returns true 
+//if the first set is a subset of the second set, and false otherwise.
+function isSubset2(setA,setB){
+  for(elem in setA){
+    if(!setB.has(elem)) return false;
+  }
+  return true;
+}
+
+var setA = new Set([1, 2, 3, 4, 5, 6]);
+var setB = new Set([4, 5, 6, 7, 8, 9]);
+console.log('is SUB SET?',isSubset2(setA,setB) )
+
+//EX3:-Write a function removeDuplicates that takes an array and returns a new array containing only unique elements 
+//(using a set to eliminate duplicates).
+
+function removeDuplicates(array){
+const mySet=new Set(array);
+return mySet;
+}
+
+console.log(removeDuplicates([1,2,3,4,5,6,1]))
+
+function optimisedRemoveDuplicates(array) {
+  return new Set(array);
+}
+
+
+//EX4-Implement a function intersection that takes two sets as parameters
+// and returns a new set containing the intersection of the input sets 
+//(common elements present in both sets).
+ function intersection(setA, setB){
+  const comonElem= new Set()
+for(i of setA){
+  if (setB.has(i)){
+comonElem.add(i)
+}
+}
+return comonElem;
+ }
+ var setA = new Set([1, 2, 3, 4, 5, 6]);
+ var setB = new Set([4, 5, 6, 7, 8, 9]);
+ console.log('intersection?',intersection(setA,setB) )
+
+ function optimisedIntersection(setA, setB) {
+  return new Set([...setA].filter(elem => setB.has(elem)));
+}
+
+//ex5:-Write a function symmetricDifference that takes two sets as parameters
+// and returns a new set containing the symmetric difference of the input sets 
+//(elements that are unique to each set).
+function symmetricDifference(setA,setB){
+  const symmetric= new Set()
+for(i of setA){
+  if (!setB.has(i)){
+    symmetric.add(i)
+}
+}
+for(i of setB){
+  if (!setA.has(i)){
+    symmetric.add(i)
+}
+}
+return symmetric;
+}
+var setA = new Set([1, 2, 3, 4, 5, 6]);
+var setB = new Set([4, 5, 6, 7, 8, 9]);
+console.log('symmetric Difference?',symmetricDifference(setA,setB) )
+function optimisedSymmetricDifference(setA, setB) {
+  return new Set([...setA].filter(elem => !setB.has(elem)).concat([...setB].filter(elem => !setA.has(elem))));
+}
 
 //MAP
 const map = new Map([
@@ -501,8 +737,159 @@ for (const [key, value] of map) {
   console.log(`Key : ${key}, Value : ${value}`);
 }
 map.clear();
+//EX1:-Write a function mergeMaps that takes two maps as parameters and returns 
+//a new map containing the entries from both maps. If there are common keys,
+// the values from the second map should overwrite the values from the first map.
+function mergeMaps(m1,m2){
+ const commonMap=new Map(m1)
+ for(let [k1,v1] of m1){
+  for(let [k2,v2] of m2){
+if(k1==k2){
+  commonMap.set(k1,v2)
+}
+else{
+  commonMap.set(k2,v2)
+}
+  }
+}
+return commonMap;
+}
+function OptimisedMergeMaps(m1, m2) {
+  const mergedMap = new Map(m1);
 
-//Queue
+  for (let [key, value] of m2) {
+    mergedMap.set(key, value);
+  }
+
+  return mergedMap;
+}
+
+// Map 1
+const map1 = new Map([
+  ['key1', 'value1'],
+  ['key2', 'value2'],
+  ['key3', 'value3']
+]);
+
+// Map 2
+const map2 = new Map([
+  ['key2', 'newvalue2'], // This will overwrite the value from map1
+  ['key4', 'value4'],
+  ['key5', 'value5']
+]);
+console.log('Merged Map:-',mergeMaps(map1,map2))
+console.log('OptimisedMergeMaps :-',OptimisedMergeMaps(map1,map2))
+
+//EX2:-Create a function countOccurrences that takes an array of elements as input and returns a map 
+//where keys are unique elements from the array, and values are the count of occurrences of each element.
+function countOccurances(array){
+  let counts=new Map()
+  for(let i of array){
+    if(!counts.has(i)){
+      counts.set(i,1);
+    }else{
+      let cnt=counts.get(i)+1;
+      counts.set(i,cnt);
+
+    }
+
+  }
+  return counts;
+}
+console.log("Count Occurance:-",countOccurances(['a','b','c','d','a','a']))
+
+function countOccurrencesOptimised(array) {
+  let counts = new Map();
+
+  for (let element of array) {
+    counts.set(element, (counts.get(element) || 0) + 1);
+  }
+
+  return counts;
+}
+
+console.log("Count Occurrence:", countOccurrencesOptimised(['a', 'b', 'c', 'd', 'a', 'a']));
+//EX3:-Write a function reverseMap that takes a map as input and returns a new map where the keys and values are swapped.
+function reverseMap(mapOrginal){
+const revMap= new Map()
+for([k,v]of mapOrginal){
+  revMap.set(v,k)
+}
+console.log('MAP K AND V reveresed',revMap)
+}
+var mapOrginal = new Map([
+  ['key1', 'value1'],
+  ['key2', 'value2'],
+  ['key3', 'value3']
+]);
+reverseMap(mapOrginal);
+
+function reverseMapOptimised(mapOriginal) {
+  const revMap = new Map([...mapOriginal].map(([k, v]) => [v, k]));
+  console.log('Reversed Map (keys and values swapped):', revMap);
+}
+
+var mapOriginal = new Map([
+  ['key1', 'value1'],
+  ['key2', 'value2'],
+  ['key3', 'value3']
+]);
+
+reverseMapOptimised(mapOriginal);
+
+//EX4:-Implement a function filterMapByKey that takes a map and a key as parameters
+// and returns a new map containing only the entry with the specified key.
+function filterMapByKey(map,key){
+  var filteredMap=new Map()
+  if(!map.has(key)){
+    throw Error(`The provided Key "${key}" is not present in the Map`)
+  }
+  else{
+    filteredMap.set(key,map.get(key))
+  }
+  return filteredMap
+}
+var mapOriginal = new Map([
+  ['key1', 'value1'],
+  ['key2', 'value2'],
+  ['key3', 'value3']
+]);
+console.log(filterMapByKey(mapOriginal,'key3'))
+function filterMapByKeyOptimised(map, key) {
+  if (!map.has(key)) {
+    throw new Error(`The provided Key "${key}" is not present in the Map`);
+  }
+
+  return new Map([[key, map.get(key)]]);
+}
+
+var mapOriginal = new Map([
+  ['key1', 'value1'],
+  ['key2', 'value2'],
+  ['key3', 'value3']
+]);
+
+console.log(filterMapByKeyOptimised(mapOriginal, 'key3'));
+//EX5:-Create a function isMapEmpty that takes a map as input and returns true if the map is empty, and false otherwise.
+function isMapEmpty(map){
+return map.size>1? false: true;
+}
+var mapOriginal = new Map([
+
+]);
+
+console.log(isMapEmpty(mapOriginal));
+
+function isMapEmptyOptimised(map) {
+  return map.size === 0;
+}
+
+var mapOriginal = new Map([]);
+
+console.log(isMapEmptyOptimised(mapOriginal));
+
+
+//Queue:-Queue follows FIFO data structure type
 class Queue {
   constructor() {
     this.items = [];
@@ -543,6 +930,9 @@ Q.print();
 console.log(Q.size());
 console.log(Q.peek());
 
+// let's optimize the queue implementation. Instead of using an array and shifting elements when dequeuing,
+// we can maintain two pointers to keep track of the front and rear of the queue.
+// This approach avoids the need to shift elements, resulting in better performance.
 class QueueOptimise {
   constructor() {
     this.item = {};
@@ -811,7 +1201,7 @@ class CircularQueue {
   LL.print(); // Should print nothing since we removed all elements
   
   
-// Stack using linked list
+// Stack using linked list:- Stack follows LIFO 
 
 class LlStack {
     constructor() {
@@ -888,6 +1278,10 @@ console.log("\nLinked List after removals:");
 myList.print(); // Should print nothing since we removed all elements
 
 
+
+//Binary Search Tree:- (BST), also called an ordered or sorted binary tree, 
+//is a rooted binary tree data structure with the key of each internal node being greater
+// than all the keys in the respective node's left subtree and less than the ones in its right subtree.
 
 
 class Node {
@@ -1089,3 +1483,34 @@ async function task2(){
 async function task3(){
   return "TASK 3"
 }
+
+//Graph 
+//use Adjancy List to create a graph
+//DEPTH FIRST APPROACH BY USING STACK
+const depthFirstPrint=(graph,source)=>{
+  const stack=[source];
+  while(stack.length>0){
+  const current=  stack.pop();
+  console.log(current);
+  for (let neighbor of graph[current]){
+    stack.push(neighbor);
+  }
+  }
+}
+const depthFirstPrintRec=(graph,source)=>{
+  console.log(source);
+  for( let neighbour of graph[source] ){
+    depthFirstPrintRec(graph,neighbour)
+  }
+}
+const graph={
+  a:["c","b"],
+  b:["d"],
+  c:["e"],
+  d:["f"],
+  e:[],
+  f:[]
+};
+
+depthFirstPrint(graph,'a')
+depthFirstPrintRec(graph,'a')

@@ -85,7 +85,7 @@ const islinearSearch = (arr, target) => {
   }
   return false;
 };
-let array = [1, 2, 3, 4, 5, 6, 7, 8];
+var array = [1, 2, 3, 4, 5, 6, 7, 8];
 
 let target = 10;
 console.log(islinearSearch(array, target));
@@ -134,25 +134,181 @@ function recursiveBinarySearch(arr,target){
 let arr = [1, 2, 3, 4, 5, 6, 7, 8];
 let tgt = 8;
 console.log('recursiveBinarySearch:-', recursiveBinarySearch(arr,tgt))
-//Bubble sort
-const BubbleSort=(array)=>{
-  let SortedArray=[];
-  let swapped=false;
 
-  do{
-for(let i=0; i<=array.length-1; i++){
-  if(array[i]>array[i+1]){
-    let temp= array[i];
-    array[i]=array[i+1];
-    array[i+1]=temp;
-    swapped=true;
 
+//BubbleSort
+const BubbleSort = (array) => {
+  let swapped;
+
+  do {
+    swapped = false;
+    for (let i = 0; i < array.length - 1; i++) {
+      if (array[i] > array[i + 1]) {
+        let temp = array[i];
+        array[i] = array[i + 1];
+        array[i + 1] = temp;
+        swapped = true;
+      }
+    }
+  } while (swapped);
+
+  return array;
+};
+
+let A = [1, 3, 4, 2, 8, 7, 5, 6];
+console.log(BubbleSort(A));
+
+
+let insertionSort =(array)=>{
+for(let i=1;i<array.length;i++){
+let numberToInsert=array[i];
+let j=i-1;
+while(j>=0&&array[j]>numberToInsert){
+  array[j+1]=array[j]
+  j=j-1;
+}
+array[j+1]=numberToInsert;
+}
+}
+var array = [8, 20, -2, 4, -6];
+
+insertionSort(array);
+console.log(array);
+
+let quickSort =(array)=>{
+let pivot =array[array.length-1];
+let left=[],right=[];
+if(array.length<2){
+  return array;
+}
+for(let i=0;i<array.length-1;i++){
+if (array[i]<pivot){
+  left.push(array[i])
+}else{
+  right.push(array[i])
+}
+}
+return [...quickSort(left),pivot,...quickSort(right)]
+}
+console.log(quickSort([8, 20, -2, 4, -6]))
+
+let mergeSort=( array)=>{
+
+  if(array.length<2){
+    return array;
+  }
+  let mid= Math.floor((array.length)/2)
+  let  left=array.slice(0,mid);
+  let right=array.slice(mid);
+  return merge(mergeSort(left), mergeSort(right))
+
+}
+function merge(left ,right ) {
+  let result =[];
+  while(left.length&&right.length){
+    if(left[0]<=right[0]){
+      result.push(left.shift())
+    }
+    else{
+      result.push(right.shift())
+    }
+  }
+  return [ ...result,...left,...right]
+}
+console.log(mergeSort([8, 20, -2, 4, -6]));
+
+let cartesianProduct =(Array1, Array2)=>{
+  let ans=[]
+  for(let i=0; i<Array1.length;i++){
+    for(let j=0;j<Array2.length;j++){
+       ans.push([Array1[i],Array1[j]])
   }
 }
-}while(swapped);
-return array;
+return ans;
+}
+console.log(cartesianProduct([1,2],[3,4]))
 
+let climbingStaircase =(n)=>{
+  let steps=[1,2]
+for (let i=2;i<n;i++){
+  steps.push(steps[i-1]+steps[i-2]);
+}
+return steps[n-1];
 }
 
-let A=[1,3,4,2,8,7,5,6];
-console.log(BubbleSort(A))
+console.log(climbingStaircase(5))
+
+function recursiveClimbingStaircase (n){
+if(n<2){
+return 1;
+}
+if (n==2){
+  return 2;
+}
+
+return recursiveClimbingStaircase(n-1)+recursiveClimbingStaircase(n-2)
+}
+console.log(recursiveClimbingStaircase(2)) 
+
+function towerOfHanoi(n,from,to,help){
+  if(n===1){
+    console.log(`Move disk 1 from ${from} to ${to}`);
+    return;
+  }
+towerOfHanoi(n-1,from,help,to);
+console.log(`Move disk ${n} from ${from} to ${to}`);
+
+towerOfHanoi(n-1,help,to,from);
+
+}
+towerOfHanoi(3,'a','b','c');
+
+
+var array= [1,2,3,3,4,5]
+let length=array.length
+console.log('length',length);
+array.push(5);
+console.log('pushed 5 in the end?',array)
+array.pop();
+console.log('poped ?',array)
+array.shift()
+console.log('shifted',array)
+
+function findDuplicates(array) {
+  const duplicates = [];
+
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[i] === array[j]) {
+        duplicates.push(array[i]);
+      }
+    }
+  }
+
+  return duplicates;
+}
+
+console.log(findDuplicates([1, 2, 4, 5, 2,4,5]));
+
+
+function removeDuplicates(array) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[i] === array[j]) {
+        array.splice(j, 1);
+        j--;
+      }
+    }
+  }
+}
+const originalArray = [1, 2, 4, 5, 2,5,6,3,2,1];
+removeDuplicates(originalArray);
+console.log(originalArray); 
+
+
+var array= [2,3,4,8,1]
+let multiplication=array.map((num)=>num*2)
+console.log('multiplication',multiplication)
+
+let addition = array.reduce((a,b)=>a+b);
+console.log('addition',addition)

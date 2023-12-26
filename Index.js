@@ -1503,14 +1503,252 @@ const depthFirstPrintRec=(graph,source)=>{
     depthFirstPrintRec(graph,neighbour)
   }
 }
-const graph={
-  a:["c","b"],
-  b:["d"],
-  c:["e"],
-  d:["f"],
-  e:[],
-  f:[]
+//BREADTH FIRST APPROACH BY USING Queue
+function breadthFisrtApproach(graph ,source){
+  const Queue = [source];
+  while(Queue.length>0){
+    let current=Queue.shift()
+    console.log(current)
+    for(let neighbor of graph[current]){
+      Queue.push(neighbor)
+    }
+  }
+}
+//Has Path Problem
+//Recursive approcah
+function hasPath(src,dst,graph){
+  if (src===dst){
+    return true;
+  }
+  for(let neighbor of graph[src]){
+    if(hasPath(neighbor,dst,graph)===true){
+      return true
+    }
+  }
+  return false ;
+}
+//Iterative Approach
+function hasPath2(src,dst, graph){
+  const Queue= [src]
+  while(Queue.length>0){
+    let current = Queue.shift()
+      if(current==dst) return true;
+for( let neighbor of graph[current]){
+Queue.push(neighbor);
+}
+
+  }
+  return false;
+
+}
+
+
+// depthFirstPrint(graph,'a')
+// depthFirstPrintRec(graph,'a')
+// breadthFisrtApproach(graph,'a')
+console.log(hasPath('b','g',graph));
+console.log(hasPath2('b','g',graph));
+//Has Path problem
+//graph Builder 
+var buildGraph=(edges)=>{
+  const graph={}
+for(let edge of edges){
+  const [a,b]=edge;
+  if(!(a in graph)) graph[a]=[];
+  if(!(b in graph)) graph[b]=[];
+  graph[a].push(b);
+  graph[b].push(a)
+}
+return graph
+}
+
+const undirectedGrap=(edge,NodeA, NodeB)=>{
+const graph=buildGraph(edge)
+return hasPathBW(graph,NodeA,NodeB,new Set())
+}
+function hasPathBW(graph,src,dst,visited){
+if(src===dst) return true;
+if(visited.has(src)) return false;
+visited.add(src)
+for(let neighbor of graph[src]){
+  if(hasPathBW(graph,neighbor,dst,visited)===true) return true;
+}
+return false
+}
+var edges=[
+  ['i','j'],
+  ['k','i'],
+  ['m','k'],
+  ['k','l'],
+  ['o','n']
+];
+
+console.log(undirectedGrap(edges,'i','k'))
+
+//count the node  connected
+
+
+const connectedNodeCount=(graph)=>{
+const visited=new Set()
+let count=0;
+for(let node in graph){
+  console.log(visited)
+if(explore(graph,node,visited)===true){
+  count++;
+}
+}
+return count;
 };
 
-depthFirstPrint(graph,'a')
-depthFirstPrintRec(graph,'a')
+const explore=(graph,current,visited)=>{
+if(visited.has(String(current))) return false
+visited.add(String(current));
+  for(let neighbor of graph[current]){
+    explore(graph,neighbor,visited)
+  }
+
+  return true;
+}
+
+console.log(connectedNodeCount(graph))
+//Largest element problem
+
+const largestElement=(graph)=>{
+  let largest =0;
+  let visited =new Set();
+  for(let node in graph){
+  const size =exploreSize(graph,node,visited)
+  if(size>largest){
+    largest=size;
+  }
+}
+return largest;
+}
+function exploreSize(graph,node,visited){
+  if(visited.has(node)) return 0;
+  visited.add(node);
+  let size =1;
+  for(let neighbor of graph[node]){
+    size+=exploreSize(graph,neighbor,visited);
+  }
+return size;
+}
+const graph={
+  1:[3,2],
+  2:[4],
+  3:[3],
+  4:[5],
+  5:[],
+  6:[7],
+  7:[2,4]
+};
+console.log('lasrgest element in Node', largestElement(graph))
+//Shortest Path problem
+const shortestPath=(nodeA,nodeB, edges)=>{
+  const graph = buildGraph(edges);
+const visited=new Set([nodeA]);
+const queue= [[nodeA,0]]
+while(queue.length>0){
+  const[node,distance]=queue.shift();
+  if(node===nodeB) return distance;
+  for(let neighbor of graph[node]){
+    if(!visited.has(neighbor)){
+      visited.add(neighbor)
+      queue.push([neighbor,distance+1]);
+    }
+  }
+}
+return -1;
+}
+const buildGraph=(edges)=>{
+  const graph={}
+for(let edge of edges){
+  const [a,b]=edge;
+  if(!(a in graph)) graph[a]=[];
+  if(!(b in graph)) graph[b]=[];
+  graph[a].push(b);
+  graph[b].push(a)
+}
+return graph
+}
+const edges=[
+  ['i','j'],
+  ['k','i'],
+  ['m','k'],
+  ['k','l'],
+  ['o','n']
+];
+
+console.log('Shortest Path:', shortestPath('i', 'l', edges));
+
+//Grid Graph
+//no of Iceland problem
+const grid = [
+  ['L', 'L', 'W', 'W', 'W'],
+  ['L', 'L', 'W', 'W', 'W'],
+  ['W', 'W', 'L', 'W', 'W'],
+  ['W', 'W', 'W', 'L', 'L'],
+];
+ 
+const islandCount=(grid)=>{
+  let visted = new Set();
+  let count =0;
+for (let r=0; r<grid.length;r+=1){
+    for(let c=0;c<grid[0].length; c+=1){
+if(explore(grid , r,c,visted)===true){
+  count +=1;
+}
+    }
+}
+return count;
+ };
+function explore( grid , r ,c, visited){
+  const rowInBounds=0<=r && r<grid.length;
+  const colInBounds=0<=c && c<grid[0].length;
+if(!rowInBounds||!colInBounds) return false;
+if(grid[r][c]==='W') return false;
+
+const pos=r+''+c;
+if(visited.has(pos)) return false;
+visited.add(pos);
+explore( grid , r-1 ,c, visited)
+explore( grid , r+1 ,c, visited)
+explore( grid , r ,c-1, visited)
+explore( grid , r ,c+1, visited)
+return true;
+ }
+
+ console.log('Land iseland is ->',islandCount(grid))
+
+  
+const minimumIsland=(grid)=>{
+  let visted = new Set();
+  let minSize =Infinity;
+for (let r=0; r<grid.length;r+=1){
+    for(let c=0;c<grid[0].length; c+=1){
+const size= exploreSize(grid,r,c,visted)
+if(size>0&&minSize>size){
+  minSize=size;
+}
+    }
+}
+return minSize;
+ };
+function exploreSize( grid , r ,c, visited){
+  const rowInBounds=0<=r && r<grid.length;
+  const colInBounds=0<=c && c<grid[0].length;
+if(!rowInBounds||!colInBounds) return 0;
+if(grid[r][c]==='W') return 0;
+
+const pos=r+''+c;
+if(visited.has(pos)) return 0;
+visited.add(pos);
+let size=1;
+size+= exploreSize( grid , r-1 ,c, visited)
+size+= exploreSize( grid , r+1 ,c, visited)
+size+= exploreSize( grid , r ,c-1, visited)
+size+= exploreSize( grid , r ,c+1, visited)
+return size;
+ }
+
+ console.log('Land iseland minimum ->',minimumIsland(grid))

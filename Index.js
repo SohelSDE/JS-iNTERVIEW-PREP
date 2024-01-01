@@ -92,7 +92,41 @@ function isPowerOfTwoBitWise(n) {
 console.log("isPowerOfTwoBitWise ?:-", isPowerOfTwoBitWise(1)); //true
 console.log("isPowerOfTwoBitWise ?:-", isPowerOfTwoBitWise(4)); //true
 console.log("isPowerOfTwoBitWise ?:-", isPowerOfTwoBitWise(2)); //true
+//reverse a number
+function revAnum(n){
+let revNum=0;
+while(n>0){
+  let digit=n%10;
+   revNum=revNum*10+digit;
+   n=Math.floor(n/10);
+}
+return revNum;
+}
+console.log(revAnum(9876))
+//isPalindrome
+//of Number
+function isPalindrome(number) {
+  let originalNumber = number;
+  let reversedNumber = 0;
 
+  while (number > 0) {
+      let digit = number % 10;
+      reversedNumber = reversedNumber * 10 + digit;
+      number = Math.floor(number / 10);
+  }
+
+  return originalNumber === reversedNumber;
+}
+const number1 = 121;
+console.log(isPalindrome(number1));  // Output: true
+//of String
+function isPalindrome(str) {
+  // Remove non-alphanumeric characters and convert to lowercase
+  const cleanStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+
+  // Compare the original string with its reverse
+  return cleanStr === cleanStr.split('').reverse().join('');
+}
 //RECURSION
 
 //fibonacci in recursion
@@ -382,7 +416,8 @@ const arrayEx = [1, 2, 3, "Sohel"];
 arrayEx.push(2);
 arrayEx.pop(5);
 arrayEx.unshift(0);
-arrayEx.shift();
+
+console.log(arrayEx.shift());
 for (const item of arrayEx) {
   console.log(item);
 }
@@ -419,6 +454,30 @@ function removeDuplicates(array) {
 const originalArray = [1, 2, 4, 5, 2,5,6,3,2,1];
 removeDuplicates(originalArray);
 console.log(originalArray); 
+//Ex3:-
+function findFrequency(arr) {
+  const frequencyMap = new Map();
+
+  arr.map(element => {
+    frequencyMap.set(element, (frequencyMap.get(element) || 0) + 1);
+  });
+
+  return frequencyMap;
+}
+function findFrequency(arr, elem) {
+  const frequencyMap = new Map();
+
+  arr.forEach(element => {
+    frequencyMap.set(element, (frequencyMap.get(element) || 0) + 1);
+  });
+
+  return frequencyMap.get(elem) || 0;
+}
+// Example usage:
+const myArray = [1, 2, 3, 4, 1, 2, 2, 3, 4, 4, 4];
+const frequency = findFrequency(myArray);
+
+console.log(frequency);
 
 //map, filter ,reduce,concat,slice?
 // Declare the arrays
@@ -446,6 +505,28 @@ const people = [
 const names = people.map((person) => person.name);
 
 console.log(names); // Output: ['Alice', 'Bob', 'Charlie']
+//ex4:- Given a Integer array A[] of n elements. Your task is to complete the function PalinArray. 
+//Which will return 1 if all the elements of the Array are palindrome otherwise it will return 0.
+
+function PalinArray(arr,n){
+  for(let i=0; i<n;i++){
+      let num=arr[i];
+      let rev=0, temp;
+      let copy=num;
+      while(num>0){
+          temp=num%10;
+          rev=rev*10+temp;
+          num=Math.floor(num/10);
+      }
+      if(copy!=rev){
+          return 0
+      }
+      
+      
+  }
+  return 1;
+}
+console.log(PalinArray([121, 131, 20], 3));  // Output: 0
 
 
 // filter function
@@ -1752,3 +1833,105 @@ return size;
  }
 
  console.log('Land iseland minimum ->',minimumIsland(grid))
+
+ //Sliding window problem
+ //fixed size 
+ //Q1:- First -ve Int in every window of size k, print 0 when there is no negative number
+ function slidingWindow(a, k) {
+  let i = 0;
+  let j = 0;
+  let ans = [];
+
+  while (j < a.length) {
+      // moving the end point to fix the size
+      if (j - i + 1 < k) {
+          j++;
+      }
+      // answer
+      else if (j - i + 1 === k) {
+          let firstNegative = findFirstNegative(a, i, j);
+          ans.push(firstNegative);
+          j++;
+          i++;
+      }
+  }
+  return ans;
+}
+
+function findFirstNegative(a, start, end) {
+  for (let i = start; i <= end; i++) {
+      if (a[i] < 0) {
+          return a[i];
+      }
+  }
+  return 0;
+}
+
+var a = [12, -1, -7, 8, -15, 30, 16, 28];
+console.log(slidingWindow(a, 3));
+
+
+
+function slidingWindow2(a, k) {
+  let i = 0;
+  let j = 0;
+  let ans = [];
+
+  while (j < a.length) {
+      // moving the end point to fix the size
+      if (j - i + 1 < k) {
+          j++;
+      }
+      // answer
+      else if (j - i + 1 === k) {
+          let firstNegative = findMaxValue(a, i, j);
+          ans.push(firstNegative);
+          j++;
+          i++;
+      }
+  }
+  return ans;
+}
+
+
+function findMaxValue(arr ,start, end ){
+  let max=0;
+  for (let i = start; i <= end; i++) {
+  if(arr[i]>max){
+    max=arr[i]
+  }
+}
+    return max;
+}
+var a = [12, -1, -7, 8, -15, 30, 16, 28];
+
+console.log(slidingWindow2(a,3))
+
+
+const maxSubArray = (arr, targetSum) => {
+  let i = 0;
+  let j = 0;
+  let max = 0;
+  let sum = 0;
+
+  while (j < arr.length) {
+    sum = sum + arr[j];
+    j++;
+    
+    if (sum === targetSum) {
+      max = Math.max(max, j - i+1);
+    }
+
+    while (sum > targetSum) {
+      sum = sum - arr[i];
+      i++;
+    }
+  }
+
+  return max;
+};
+
+var a = [5, 4, 3, 8, 15, 16, 20];
+let targetSum = 15;
+console.log(maxSubArray(a, targetSum));
+

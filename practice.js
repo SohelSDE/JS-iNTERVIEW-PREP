@@ -761,3 +761,66 @@ function isPalindromeString(str){
 }
 console.log(isPalindromeString('Mayllyam'))
 
+function mechanismOfUserDelete2(usersCred, id) {
+  const userIndex = usersCred.users.findIndex((user) => user.id === id);
+  if (userIndex === -1) {
+    return "User doesn't exist";
+  }
+
+  usersCred = {
+    ...usersCred,
+    ...usersCred.users.splice(userIndex, 1),
+  };
+
+  return usersCred;
+}
+function mechanismOfUserDelete(usersCred, id) {
+  // console.log('mechanismOfUserDelete getting ID?',id)
+  const userIndex = usersCred.users.findIndex((user) => user.id === id);
+  if (userIndex === -1) {
+    return "User doesn't exist";
+  }
+
+  usersCred.users[userIndex] = {
+    ...usersCred.users.splice(userIndex, 1),
+  };
+
+  return usersCred;
+}
+const usersCred = {
+  admin: {
+    id: 0,
+    role: "Admin",
+    username: "sohelislam993@gmail.com",
+    password: "TECHSTAR",
+  },
+  users: [
+    {
+      id: 1,
+      role: "User",
+      username: "HReddy701@gmail.com",
+      password: "HReddy701",
+    },
+    {
+      id: 2,
+      role: "User",
+      username: "Venkat@gmail.com",
+      password: "Venkat",
+    },
+    {
+      id: 3,
+      role: "User",
+      username: "user1@gmail.com",
+      password: "user1",
+    },
+    {
+      id: 4,
+      role: "User",
+      username: "user2@gmail.com",
+      password: "user2",
+    },
+  ],
+};
+console.log('data should be in new version',mechanismOfUserDelete2(usersCred,3))
+console.log('data should be in old version',mechanismOfUserDelete(usersCred,4))
+

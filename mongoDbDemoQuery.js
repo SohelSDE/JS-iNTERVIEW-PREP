@@ -296,10 +296,17 @@ $bucket:{
 //with more info db.inventory.aggregate([{$match:{tags:"Valuable"}},{$bucket:{groupBy:"$qty",boundaries:[0,100,200],default:"greter then 200",output:{count:{$sum:1},items:{$push:"$item"}}}}])
 
 
+//$lookup- is an aggregation pipeline stage that allows younto perform a left outer join between two collections
+
+the structure of look up :-
 
 
 
-
-
+db.oDetails.aggregate([{$lookup:{
+from:"cDetails",
+localField:"cId",
+foreignField:"clientId",
+as:"Shipment"
+}}])
 
 

@@ -11,48 +11,51 @@ weight:"100kg"
 },
 
 })
-db.inventory.insertMany([
-{
+ db.inventory.insertOne({
+item:"Cobalt",
+qty:100,
+tags:["Valuable","Metal"],
+size:{
+weight:"200kg"
+},
+
+})
+db.inventory.insertMany([{
 item:"Silver",
 qty:100,
 tags:["Premium","Metal"],
 size:{
 weight:"100kg"
-
-}
 },
-
+},
 {
 item:"Iron",
 qty:100,
 tags:["Metal"],
 size:{
 weight:"100kg"
-
-},
-
-},
+},},
 {
-item:"Zink",
-qty:100,
-tags:["Metal"],
-size:{
-weight:"100kg"
+    item:"Zink",
+    qty:100,
+    tags:["Metal"],
+    size:{
+    weight:"100kg"
+    
+    },
+    
+    },
+    {
+    item:"Copper",
+    qty:100,
+    tags:["Metal","Valueable"],
+    size:{
+    weight:"100kg"
+    
+    },
+    
+    }]
 
-},
-
-},
-{
-item:"Copper",
-qty:100,
-tags:["Metal","Valueable"],
-size:{
-weight:"100kg"
-
-},
-
-}
-])
 
 //Read :-
 //fetches all the data
@@ -78,8 +81,10 @@ db.inventory.findOne({$or:[{tags:"cotton"},{size:100}]})
 //Update:-
 //Update one
 db.inventory.updateOne({item:"Zink"},{$set:{"tags":"cotton"}})
+)
 //update Many
 db.inventory.updateMany({item:"Zink"},{$set:{"tags":"cotton"}})
+)
 db.inventory.updateMany({qty:100},{$set:{"tags":"monalisa"}})
 
 //Delete :-
@@ -108,6 +113,50 @@ db.inventory.find().sort({qty:-1})//Decendng Order
 
 //Achiving pagination using MongoDB find and limit
 db.Inventory.find().skip((pageNo-1)*no).limit(no)
+//$eq-Matches values that are equal to a specified value.
+//similar to db.collectionName("obj name":"obj value") 
+db.inventory.find({qty:{$eq:98}})
+//embedded query
+db.inventory.find( { "size.hight": { $eq: "2000kg" } } )
+//from array
+db.inventory.find( { tags: { $eq: "Premium" } } )
+//and
+db.inventory.find( { tags: { $eq: [ "Metal", "Valueable" ] } } )
+//regex matching
+db.inventory.find({item:{$regex:/Co/}})
+db.inventory.find({item:{$eq:/Co/}})
+
+//Greater then-$gt  -find
+
+db.inventory.find({qty:{$gt:100}})
+
+//update
+
+db.inventory.updateOne({qty:{$gt:100}},{$set:{"weight":"1000kg"}})
+
+//delete
+db.inventory.deleteMany({qty:{$gt:100}})
+
+//$gte = gretter than equal to
+db.inventory.find({qty:{$gte:100}})
+
+//update
+
+db.inventory.updateOne({qty:{$gte:100}},{$set:{"weight":"1000kg"}})
+
+//delete
+db.inventory.deleteMany({qty:{$gte:100}})
+
+//$lt= lesser then , $lte= lesser than equal to
+db.inventory.find({qty:{$lt:1000}})
+db.inventory.updateMany({qty:{$lt:1000}},{$set:{"data":"To be deleted"}})
+db.inventory.deleteMany({qty:{$lte:100}})
+
+db.inventory.find({qty:{$lte:100}})
+db.inventory.updateMany({qty:{$lte:100}},{$set:{"data":"To be deleted"}})
+db.inventory.deleteMany({qty:{$lte:100}})
+
+
 
 
 

@@ -1,8 +1,11 @@
-db.dropDatabase()// Delete data base-collectionscompletely
-testDb> db.dummy2.drop()// deletes one specified database 
+WARN:-  db.dropDatabase()// Delete database collectionscompletely
+ db.dummy2.drop()// deletes one specified database 
 
-show dbs // shows all dbs
+show dbs // shows all dbsshow collections 
 use Invenventory // using Inventory collecion now
+show collections //  will shw the collection present in that dbs
+
+
 //CRUD opertion:-
 //crete:-
 db.inventory.insertOne({
@@ -275,6 +278,23 @@ db.inventory.aggregate([
     }
   }
 ])
+
+//BUCKETS
+
+{
+$bucket:{
+   groupBy:"$qty",
+   boundaries:[0,30,40],
+   default:Gretter then 40,
+   outPut:{
+          count:{$sum:1}
+           } 
+ }
+}
+ db.inventory.aggregate([{$match:{tags:"Valuable"}},{$bucket:{groupBy:"$qty",boundaries:[0,100,200],default:"greter then 200",output:{count:{$sum:1}}}}])
+
+//with more info db.inventory.aggregate([{$match:{tags:"Valuable"}},{$bucket:{groupBy:"$qty",boundaries:[0,100,200],default:"greter then 200",output:{count:{$sum:1},items:{$push:"$item"}}}}])
+
 
 
 

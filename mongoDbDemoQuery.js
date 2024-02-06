@@ -194,6 +194,88 @@ db.Data.find({$text:{$search:"Developer -python"}},{score:{$meta:"textScore"}})
 //sorting with relevent
 db.Data.find({$text:{$search:"Developer Sohel"}},{score:{$meta:"textScore"}}).sort({score:{$meta:"textScore"}})
 
+// Agrigation
+ db.collection .aggregate(pipeline,options)
+//match operator 
+
+db.inventory.aggregate([{$match:{qty:100}}])
+//$group:-
+$group:{_id:expression,
+field1: expression,
+field:expression,...}
+
+The $group operator groups documents by the qty field,
+creating a new document for each unique age value
+The _id field in the group stage specifies the field based in which the documents will be grouped.
+
+db.inventory.aggregate([{$group:{_id:"$qty"}}])
+
+ // the names for those ids 
+db.inventory.aggregate([{$group:{_id:"$qty",name:{$push:"$item"}}}])
+
+//$$ROOT :- is reference to the current docs being processed in the pipeline , which represents the complete document
+
+db.inventory.aggregate([{$group:{_id:"$qty",name:{$push:"$$ROOT"}}}])
+
+//Give a count per qty of metals
+
+db.inventory.aggregate([{$match:{qty:100}},{$group:{_id:"$qty",number:{$sum:1}}}])
+
+db.inventory.aggregate([{$match:{tags:"Metal"}},{$group:{_id:"$qty",number:{$sum:1}}}])
+
+ db.inventory.aggregate([{$match:{tags:"Metal"}},{$group:{_id:"$qty",number:{$sum:1},name:{$push:"$$ROOT"}}}]) 
+
+//Give a count per qty of metal and sirt them by count in desc manner
+db.inventory.aggregate([{$match:{tags:"Metal"}},{$group:{_id:"$qty",number:{$sum:1},name:{$push:"$$ROOT"}}},{$sort:{number:-1}}])
+
+//find max
+
+db.inventory.aggregate([{$match:{tags:"Metal"}},{$group:{_id:"$qty",number:{$sum:1},name:{$push:"$$ROOT"}}},{$sort:{number:-1}},{$group:{_id:null,maxNumber:{$max:"$number"}}}])
+
+
+//$unwind
+
+db.inventory.aggregate([{$unwind:"$tags"}])
+
+find average Price of metals
+
+//$avg
+db.inventory.aggregate([{$group:{_id:null,avaragePrice:{$avg:"$Price"}}}])
+
+find the total number of tags for all metals
+
+db.inventory.aggregate([{$unwind:"$tags"},{$group:{_id:null, count:{$sum:1}}}])
+
+//another way:-
+db.inventory.aggregate([{$group:{_id:null,count:{$sum:{$size:"$tags"}}}}])
+//safest way
+ db.inventory.aggregate([{$group:{_id:null,count:{$sum:{$size:{$ifNull:["$tags",[]]}}}}}])
+
+//List All tags 
+
+db.inventory.aggregate([{$unwind:"$tags"},{$group:{_id:null,allTags:{$push:"$tags"}}}])
+
+//list distinct values only 
+db.inventory.aggregate([{$unwind:"$tags"},{$group:{_id:null,allTags:{$addToSet:"$tags"}}}])
+
+// Filter
+db.inventory.aggregate([
+  {
+    $group: {
+      _id: null,
+      avgPrice: {
+        $avg: {
+          $cond: {
+            if: { $gt: ["$Price", 2000] },
+            then: "$Price",
+            else: null
+          }
+        }
+      }
+    }
+  }
+])
+
 
 
 

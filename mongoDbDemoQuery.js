@@ -1,5 +1,8 @@
-// show dbs // shows all dbs
-// use Invenventory // using Inventory collecion now
+db.dropDatabase()// Delete data base-collectionscompletely
+testDb> db.dummy2.drop()// deletes one specified database 
+
+show dbs // shows all dbs
+use Invenventory // using Inventory collecion now
 //CRUD opertion:-
 //crete:-
 db.inventory.insertOne({
@@ -10,52 +13,12 @@ size:{
 weight:"100kg"
 },
 
-})
- db.inventory.insertOne({
-item:"Cobalt",
-qty:100,
-tags:["Valuable","Metal"],
-size:{
-weight:"200kg"
-},
 
 })
-db.inventory.insertMany([{
-item:"Silver",
-qty:100,
-tags:["Premium","Metal"],
-size:{
-weight:"100kg"
-},
-},
-{
-item:"Iron",
-qty:100,
-tags:["Metal"],
-size:{
-weight:"100kg"
-},},
-{
-    item:"Zink",
-    qty:100,
-    tags:["Metal"],
-    size:{
-    weight:"100kg"
-    
-    },
-    
-    },
-    {
-    item:"Copper",
-    qty:100,
-    tags:["Metal","Valueable"],
-    size:{
-    weight:"100kg"
-    
-    },
-    
-    }]
+ db.inventory.insertOne({item:"Cobalt",qty:100,tags:["Valuale","Metal"],size:{weight:"200kg"},})
+db.Data.insertMany([{name:'Koyel',bio:'Python Developer,Mern Stack Engineer'},{name:'Roja',bio:'DB-admin'},{name:'Ishan',bio:'Data Analyst'}])
 
+db.inventory.insertMany([{item:'Palladium',qty:10,tags:['Metal','Valuable'],size:{weight:'88kg'}},{item:'Vanadium',qty:20,tags:['Metal','Valuable'],size:{weight:'88kg'}},{item:'Zink',qty:200,tags:['Metal','Valuable'],size:{weight:'88kg'}}])
 
 //Read :-
 //fetches all the data
@@ -155,6 +118,83 @@ db.inventory.deleteMany({qty:{$lte:100}})
 db.inventory.find({qty:{$lte:100}})
 db.inventory.updateMany({qty:{$lte:100}},{$set:{"data":"To be deleted"}})
 db.inventory.deleteMany({qty:{$lte:100}})
+
+//Indexing 
+Indexes are stored in a B-tree(balanced tree) data structure 
+It Stores 
+1. Index keys 
+2. Pointers toe the documents in the collection
+
+disadvantages:-
+storage space
+write performance
+
+There are several types of indexes available in MongoDB
+
+1.Single field indexes
+2.Compound indexes
+3.Text indexes
+
+
+//performance checking .explain()- will tel the meta data behind any exaxution
+ db.inventory.find({item:"gold"}).explain()
+ db.inventory.find({item:"gold"}).explain("executionStats")
+//1.Single field indexes
+
+//Create Index
+db.inventory.createIndex({'Index':1})
+db.inventory.createIndex({'qty':1},{unique:true})
+
+1->accending order
+-1-> deccending order
+//Drop Index
+db.inventory.dropIndex({'Index':1})
+
+//When Not to use Indexing?
+1.When Collection is Small
+2.When the collection is frequently updated
+3.when the queries are complex (multiple fields)
+4.when the collection is large (make less indices)
+
+
+
+//2.Compound indexes
+
+db.inventory.createIndex({'Price':1,'qty':-1})
+//Price_1_qty_-1
+
+its shorted by Price first and qty next
+if short by //Price_1_qty_-1
+then i will be INXSCAN- index scan
+if it is sort by //Price_1 only 
+still it will be Index scan
+ but if it is sorted by qty_-1
+then it will be collection scan
+
+
+3.Text indexes
+
+Single Text Index per Collection
+Tokenization and Stemming
+Relevance Score
+
+//create text index
+db.Data.createIndex({bio:"text",name:"text"})
+
+ db.Data.createIndex({bio:"text",name:"text"},{weight:{name:1000,bio:1}})// giving priority to name
+ db.Data.createIndex({bio:"text",name:"text"},{background:true})// will lock the query depends upon only Indexing
+
+//find
+
+db.Data.find({$text:{$search:"Developer"}})
+
+db.Data.find({$text:{$search:"Developer"}},{score:{$meta:"textScore"}})
+//- excludede python
+db.Data.find({$text:{$search:"Developer -python"}},{score:{$meta:"textScore"}})
+//sorting with relevent
+db.Data.find({$text:{$search:"Developer Sohel"}},{score:{$meta:"textScore"}}).sort({score:{$meta:"textScore"}})
+
+
 
 
 
